@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Cors;
 namespace UniSystem.Api.Controllers
 {
     [ApiController]
-    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
