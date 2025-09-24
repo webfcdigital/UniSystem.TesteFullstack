@@ -1,11 +1,11 @@
 <div class="container p-4 mx-auto">
   <div class="flex items-center justify-between mb-4">
-    <h1 class="text-3xl font-bold text-gray-900">Registered Users</h1>
+    <h1 class="text-3xl font-bold text-gray-900">Usuários Cadastrados</h1>
     <button (click)="logout()" class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-      Logout
+      Sair
     </button>
   </div>
-  <p class="mb-8 text-sm text-gray-600">A list of all users in the system.</p>
+  <p class="mb-8 text-sm text-gray-600">Uma lista de todos os usuários no sistema.</p>
 
   <div *ngIf="error" class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
     {{ error }}
@@ -22,7 +22,7 @@
                   ID
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                  Name
+                  Nome
                 </th>
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                   Email

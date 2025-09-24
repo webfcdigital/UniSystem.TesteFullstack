@@ -18,7 +18,7 @@ namespace UniSystem.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(LoginCommand command)
+        public async Task<ActionResult<string>> Login(LoginComando command)
         {
             var token = await _mediator.Send(command);
             return Ok(token);

@@ -21,7 +21,7 @@ namespace UniSystem.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Guid>> CreateUser(CreateUserCommand command)
+        public async Task<ActionResult<Guid>> CreateUser(CriarUsuarioComando command)
         {
             var userId = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetUsers), new { id = userId }, userId);

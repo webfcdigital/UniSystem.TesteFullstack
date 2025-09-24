@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace UniSystem.Application.Auth.Commands.Login
 {
-    public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
+    public class LoginComandoHandler : IRequestHandler<LoginComando, string>
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-        public LoginCommandHandler(
+        public LoginComandoHandler(
             IUserRepository userRepository,
             IPasswordHasher passwordHasher,
             IJwtTokenGenerator jwtTokenGenerator)
@@ -22,27 +22,21 @@ namespace UniSystem.Application.Auth.Commands.Login
             _jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(LoginComando request, CancellationToken cancellationToken)
         {
-            // 1. Retrieve the user by email
             var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
             if (user == null)
             {
-                // TODO: Throw a specific exception for invalid credentials
-                throw new Exception("Invalid credentials.");
+                throw new Exception("Credenciais inválidas.");
             }
 
-            // 2. Verify the password
-            if (!_passwordHasher.VerifyPassword(request.Password, user.PasswordHash))
+            if (!_passwordHasher.VerifyPassword(request.Senha, user.PasswordHash))
             {
-                // TODO: Throw a specific exception for invalid credentials
-                throw new Exception("Invalid credentials.");
+                throw new Exception("Credenciais inválidas.");
             }
 
-            // 3. Generate JWT
             var token = _jwtTokenGenerator.GenerateToken(user);
 
-            // 4. Return the JWT
             return token;
         }
     }
