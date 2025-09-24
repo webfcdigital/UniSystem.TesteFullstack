@@ -2,10 +2,12 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UniSystem.Application.Auth.Commands.Login;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace UniSystem.Api.Controllers
 {
     [ApiController]
+    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {

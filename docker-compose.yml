@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: unisystem-db
+    environment:
+      - POSTGRES_DB=unisystem
+      - POSTGRES_USER=unisystem
+      - POSTGRES_PASSWORD=unisystem
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    container_name: unisystem-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=unisystem;Username=unisystem;Password=unisystem
+      - JwtSettings__Secret=super-secret-key-that-is-long-enough
+      - JwtSettings__Issuer=UniSystem
+      - JwtSettings__Audience=UniSystem
+    depends_on:
+      - db
+
+  frontend:
+    container_name: unisystem-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

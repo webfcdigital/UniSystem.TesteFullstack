@@ -4,10 +4,13 @@ using UniSystem.Application.Users.Queries.GetUsers;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using UniSystem.Application.Users.Commands.CreateUser;
+using Microsoft.AspNetCore.Cors;
 
 namespace UniSystem.Api.Controllers
 {
     [ApiController]
+    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
@@ -18,8 +21,14 @@ namespace UniSystem.Api.Controllers
             _mediator = mediator;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Guid>> CreateUser(CreateUserCommand command)
+        {
+            var userId = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetUsers), new { id = userId }, userId);
+        }
+
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<List<UserDto>>> GetUsers()
         {
             var users = await _mediator.Send(new GetUsersQuery());

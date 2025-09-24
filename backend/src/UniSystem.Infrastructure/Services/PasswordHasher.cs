@@ -1,4 +1,5 @@
 using UniSystem.Application.Common.Interfaces;
+using BCrypt.Net;
 
 namespace UniSystem.Infrastructure.Services
 {
@@ -6,15 +7,12 @@ namespace UniSystem.Infrastructure.Services
     {
         public string HashPassword(string password)
         {
-            // In a real application, use a strong hashing algorithm like BCrypt.Net or Argon2
-            // For simplicity, we'll just return the password itself for now.
-            return password;
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
 
         public bool VerifyPassword(string password, string hashedPassword)
         {
-            // In a real application, verify the hashed password
-            return password == hashedPassword;
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
         }
     }
 }

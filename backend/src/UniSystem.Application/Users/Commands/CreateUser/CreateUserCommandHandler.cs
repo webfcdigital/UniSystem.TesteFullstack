@@ -4,7 +4,7 @@ using UniSystem.Domain.Entities;
 
 namespace UniSystem.Application.Users.Commands.CreateUser
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
@@ -15,13 +15,13 @@ namespace UniSystem.Application.Users.Commands.CreateUser
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             // Check if email already exists
             var existingUser = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
             if (existingUser != null)
             {
-                throw new Exception("Email already exists."); // Or a more specific custom exception
+                throw new Exception("Email already exists."); 
             }
 
             var passwordHash = _passwordHasher.HashPassword(request.Password);

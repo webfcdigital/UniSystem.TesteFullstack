@@ -2,7 +2,7 @@ using MediatR;
 
 namespace UniSystem.Application.Users.Commands.CreateUser
 {
-    public class CreateUserCommand : IRequest<Guid>
+    public class CreateUserCommand : IRequest<string>
     {
         public string Name { get; set; }
         public string Email { get; set; }
